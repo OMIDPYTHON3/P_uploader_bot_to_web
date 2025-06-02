@@ -59,34 +59,97 @@ def dir_listing(req_path=''):
     total, used, free = shutil.disk_usage(BASE_DIR)
 
     html = '''
-    <h2>💾 فضای دیسک:</h2>
-    <ul>
-        <li>کل: {{ disk_total }}</li>
-        <li>مصرف‌شده: {{ disk_used }}</li>
-        <li>آزاد: {{ disk_free }}</li>
-        <li>📂 مجموع فایل‌های این پوشه: {{ folder_total }}</li>
-    </ul>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>File Browser</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 10px;
+      font-size: 14px;
+    }
+    h1, h2 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0;
+    }
+    li {
+      margin: 6px 0;
+      background: #fff;
+      padding: 6px 8px;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      font-size: 13px;
+    }
+    a {
+      text-decoration: none;
+      color: #0069d9;
+      margin-right: 6px;
+    }
+    form {
+      display: inline;
+      margin-left: 6px;
+    }
+    input[type="password"] {
+      padding: 2px 5px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      width: 100px;
+    }
+    button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 3px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    button:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <h2>💾 فضای دیسک:</h2>
+  <ul>
+      <li>کل: {{ disk_total }}</li>
+      <li>مصرف‌شده: {{ disk_used }}</li>
+      <li>آزاد: {{ disk_free }}</li>
+      <li>📂 مجموع فایل‌های این پوشه: {{ folder_total }}</li>
+  </ul>
 
-    <h1>📁 مسیر جاری: /{{ current_path }}</h1>
-    <ul>
-      {% if parent_link %}
-        <li><a href="{{ parent_link }}">⬅️ بازگشت</a></li>
-      {% endif %}
-      {% for file in files %}
-        <li>
-          <a href="{{ file.link }}">{{ file.name }}</a>
-          {% if file.is_file %}
-            - {{ file.size }}
-            <form method="POST" action="/delete" style="display:inline;">
-              <input type="hidden" name="path" value="{{ file.path }}">
-              <input type="password" name="password" placeholder="رمز حذف" required>
-              <button type="submit">🗑️ حذف</button>
-            </form>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-    '''
+  <h1>📁 مسیر جاری: /{{ current_path }}</h1>
+  <ul>
+    {% if parent_link %}
+      <li><a href="{{ parent_link }}">⬅️ بازگشت</a></li>
+    {% endif %}
+    {% for file in files %}
+      <li>
+        <a href="{{ file.link }}">{{ file.name }}</a>
+        {% if file.is_file %}
+          - {{ file.size }}
+          <form method="POST" action="/delete">
+            <input type="hidden" name="path" value="{{ file.path }}">
+            <input type="password" name="password" placeholder="رمز حذف" required>
+            <button type="submit">🗑️ حذف</button>
+          </form>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
+'''
 
     return render_template_string(html,
         files=file_links,
