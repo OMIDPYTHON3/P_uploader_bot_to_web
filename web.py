@@ -71,6 +71,12 @@ def dir_listing(req_path=''):
       color: #333;
       padding: 10px;
       font-size: 14px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
     }
     h1, h2 {
       font-size: 16px;
@@ -120,33 +126,35 @@ def dir_listing(req_path=''):
   </style>
 </head>
 <body>
-  <h2>💾 فضای دیسک:</h2>
-  <ul>
-      <li>کل: {{ disk_total }}</li>
-      <li>مصرف‌شده: {{ disk_used }}</li>
-      <li>آزاد: {{ disk_free }}</li>
-      <li>📂 مجموع فایل‌های این پوشه: {{ folder_total }}</li>
-  </ul>
+  <div class="container">
+    <h2>💾 فضای دیسک:</h2>
+    <ul>
+        <li>کل: {{ disk_total }}</li>
+        <li>مصرف‌شده: {{ disk_used }}</li>
+        <li>آزاد: {{ disk_free }}</li>
+        <li>📂 مجموع فایل‌های این پوشه: {{ folder_total }}</li>
+    </ul>
 
-  <h1>📁 مسیر جاری: /{{ current_path }}</h1>
-  <ul>
-    {% if parent_link %}
-      <li><a href="{{ parent_link }}">⬅️ بازگشت</a></li>
-    {% endif %}
-    {% for file in files %}
-      <li>
-        <a href="{{ file.link }}">{{ file.name }}</a>
-        {% if file.is_file %}
-          - {{ file.size }}
-          <form method="POST" action="/delete">
-            <input type="hidden" name="path" value="{{ file.path }}">
-            <input type="password" name="password" placeholder="رمز حذف" required>
-            <button type="submit">🗑️ حذف</button>
-          </form>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+    <h1>📁 مسیر جاری: /{{ current_path }}</h1>
+    <ul>
+      {% if parent_link %}
+        <li><a href="{{ parent_link }}">⬅️ بازگشت</a></li>
+      {% endif %}
+      {% for file in files %}
+        <li>
+          <a href="{{ file.link }}">{{ file.name }}</a>
+          {% if file.is_file %}
+            - {{ file.size }}
+            <form method="POST" action="/delete">
+              <input type="hidden" name="path" value="{{ file.path }}">
+              <input type="password" name="password" placeholder="رمز حذف" required>
+              <button type="submit">🗑️ حذف</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </body>
 </html>
 '''
