@@ -8,7 +8,7 @@ keep_alive()
 #Pyrogram connection specifications
 api_id = 25444013
 api_hash = "bfbb5734526653271b8a106d046b5754"
-bot_token = "6022537053:AAHJCv2FJRQCYKPIvokoPoM6fYKQV7JYvvE"
+bot_token = "6022537053:AAFBLezSYFlj70nLsn0wyDxkZ5BuT06xXMU"
 
 admin = 5861650867
 app = Client("bot", api_id, api_hash, bot_token=bot_token)
