@@ -15,6 +15,12 @@ def format_size(size_bytes):
     else:
         return f"{size_bytes / 1024**3:.2f} GB"
 
+@app1.route('/on')
+def on():
+    return 'alive'
+
+
+
 @app1.route('/')
 @app1.route('/<path:req_path>')
 def dir_listing(req_path=''):
