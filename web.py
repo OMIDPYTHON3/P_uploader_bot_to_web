@@ -63,6 +63,7 @@ def dir_listing(req_path=''):
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>File Browser</title>
   <style>
     body {
@@ -71,15 +72,14 @@ def dir_listing(req_path=''):
       color: #333;
       padding: 10px;
       font-size: 14px;
-      display: flex;
-      justify-content: center;
+      margin: 0;
     }
     .container {
-      max-width: 800px;
+      max-width: 100%;
       width: 100%;
     }
     h1, h2 {
-      font-size: 16px;
+      font-size: 15px;
       margin-bottom: 8px;
     }
     ul {
@@ -94,15 +94,19 @@ def dir_listing(req_path=''):
       border-radius: 4px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
       font-size: 13px;
+      display: flex;
+      flex-direction: column;
     }
     a {
       text-decoration: none;
       color: #0069d9;
-      margin-right: 6px;
+      margin-bottom: 4px;
+      word-break: break-all;
     }
     form {
-      display: inline;
-      margin-left: 6px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
     }
     input[type="password"] {
       padding: 2px 5px;
@@ -144,7 +148,7 @@ def dir_listing(req_path=''):
         <li>
           <a href="{{ file.link }}">{{ file.name }}</a>
           {% if file.is_file %}
-            - {{ file.size }}
+            <span>📦 {{ file.size }}</span>
             <form method="POST" action="/delete">
               <input type="hidden" name="path" value="{{ file.path }}">
               <input type="password" name="password" placeholder="رمز حذف" required>
