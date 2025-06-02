@@ -23,7 +23,9 @@ async def amo(bot,message):
 async def download_duc(bot,message):
     await app.send_message(message.chat.id,"downloading . . .")
     await app.download_media(message)
-    await app.send_message(message.chat.id,"downloaded")
+    await app.send_message(message.chat.id,"""downloaded 
+    • https://p-uploader-bot-to-web.onrender.com
+    """)
 
 
 app.run()
