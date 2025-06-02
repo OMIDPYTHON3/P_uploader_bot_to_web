@@ -23,8 +23,8 @@ def on():
 
 @app1.route('/')
 @app1.route('/<path:req_path>')
-def dir_listing(req_path='downloads/'):
-    BASE_DIR = os.getcwd()
+def dir_listing(req_path=''):
+    BASE_DIR = os.path.join(os.getcwd(), 'downloads')
     abs_path = os.path.join(BASE_DIR, req_path)
 
     if os.path.isfile(abs_path):
