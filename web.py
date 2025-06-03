@@ -26,7 +26,7 @@ def dir_listing(req_path=''):
         return send_from_directory(os.path.dirname(abs_path), os.path.basename(abs_path))
 
     if not os.path.exists(abs_path):
-        return "❌ مسیر پیدا نشد", 404
+        return "❌ مسیر پیدا نشد", 200
 
     files = os.listdir(abs_path)
     files.sort()
@@ -186,7 +186,12 @@ def delete_file():
         os.remove(abs_path)
         return redirect('/' + '/'.join(path.split('/')[:-1]))
     else:
-        return "فایل پیدا نشد", 404
+        return "فایل پیدا نشد", 200
+
+@app1.route('/on')
+def enable():
+  return "alive ."
+
 
 def run():
     app1.run(host="0.0.0.0", port=8080)
